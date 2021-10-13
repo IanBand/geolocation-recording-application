@@ -3,7 +3,6 @@ var state = {
     cities: []
 };
 
-
 function main(){
 
     fetch('https://s3-us-west-2.amazonaws.com/cdt-web-storage/cities.json')
@@ -37,14 +36,14 @@ function sortDecending(e){
 function calcDistances(apiData){
     return apiData.map(elem => {
         // Corvallis latitude and longitude obtained from https://www.geodatasource.com/demo
-        return {city: elem.city, dist: distance(44.5646, -123.262, elem.lat, elem.lng, "M")};
+        return {...elem, dist: distance(44.5646, -123.262, elem.lat, elem.lng, "M")};
     });
 }
 function renderList(){
-    console.log('renderList()');
+    // console.log('renderList()');
     removeAllChildNodes(listElement);
-    addRow(listElement,["City", "Distance"]);
-    state.cities.forEach(elem => addRow(listElement,[elem.city, elem.dist]));
+    addRow(listElement,["City", "Latitude","Longitude","Distance from OSU"]);
+    state.cities.forEach(elem => addRow(listElement,[elem.city, elem.lat, elem.lng, elem.dist]));
 }
 /**
  * @param {Element}  parent parent <table> element
